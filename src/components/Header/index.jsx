@@ -33,11 +33,18 @@ import Register from "../../feature/auth/components/Register";
 import actions from "../../feature/auth/UserSlice";
 import { cartItemsCountSelector } from "../../feature/Cart/cartSelector";
 import "./style.scss";
-const pages = ["home", "product"];
+const pages = [
+  { name: "home", isAdmin: false },
+  { name: "product", isAdmin: false },
+  { name: "create product", isAdmin: true },
+  { name: "categories", isAdmin: true },
+];
 const settings = ["Profile", "Account", "Logout"];
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.info.main,
+    "&&&": {
+      backgroundColor: theme.palette.info.dark,
+    },
   },
   logo: {
     width: "80px",
@@ -63,7 +70,13 @@ const useStyles = makeStyles((theme) => ({
   },
   cart: {
     marginRight: theme.spacing(2),
-    color: '#fff', 
+    color: "#fff",
+  },
+  admin: {
+    textDecoration: "none",
+    "& > h4": {
+      color: "#fff",
+    },
   },
 }));
 
@@ -71,7 +84,7 @@ const MODE = {
   LOGIN: "login",
   REGISTER: "register",
 };
-function Header(props) {
+function Header({ isAdmin }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -141,8 +154,14 @@ function Header(props) {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            <Link to="/">
-              <img src="logobrandNew.png" alt="" className={classes.logo} />
+            <Link to="/" className={classes.admin}>
+              {isAdmin ? (
+                <Typography component="h4" variant="h5">
+                  ADMIN
+                </Typography>
+              ) : (
+                <img src="logobrandNew.png" alt="" className={classes.logo} />
+              )}
             </Link>
           </Typography>
 
@@ -171,49 +190,70 @@ function Header(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
-            <img
-              src="D:\DAIHOC\baocao\client\public\logobrandNew.png"
-              alt=""
-              className={classes.logo}
-            />
+            {isAdmin ? (
+              <Typography component="h4" variant="h5">
+                ADMIN
+              </Typography>
+            ) : (
+              <img
+                src="D:\DAIHOC\baocao\client\public\logobrandNew.png"
+                alt=""
+                className={classes.logo}
+              />
+            )}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link to={`/${page}`} key={page} className={classes.item}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page}
-                </Button>
-              </Link>
-            ))}
-            {user.role === 1 && (
-              <Link to="/admin" className={classes.item}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  admin
-                </Button>
-              </Link>
-            )}
+            {pages.map((page) => {
+              if (isAdmin) {
+                return (
+                  <Link
+                    to={`/${page.name.replace(" ", "")}`}
+                    key={page.name}
+                    className={classes.item}
+                  >
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page.name}
+                    </Button>
+                  </Link>
+                );
+              } else {
+                if (!page.isAdmin) {
+                  return (
+                    <Link
+                      to={`/${page.name.replace(" ", "")}`}
+                      key={page.name}
+                      className={classes.item}
+                    >
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: "white", display: "block" }}
+                      >
+                        {page.name}
+                      </Button>
+                    </Link>
+                  );
+                }
+              }
+            })}
           </Box>
           <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
             {Object.keys(user).length !== 0 ? (
-              user.role === 1 ? (
+              isAdmin ? (
                 false
               ) : (
                 <Link to="/cart">
-                <IconButton >
-                <Badge
-                  color="secondary"
-                  badgeContent={quantityCart || 0}
-                  className={classes.cart}
-                >
-                  <ShoppingCartOutlinedIcon />
-                </Badge>
-                </IconButton>
+                  <IconButton>
+                    <Badge
+                      color="secondary"
+                      badgeContent={quantityCart || 0}
+                      className={classes.cart}
+                    >
+                      <ShoppingCartOutlinedIcon />
+                    </Badge>
+                  </IconButton>
                 </Link>
               )
             ) : (

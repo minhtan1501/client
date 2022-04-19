@@ -14,7 +14,7 @@ function ProductFeature(props) {
         <Box pt={3}>
             <Routes>
                 <Route path='/' element={<ListPage/>} />
-                <Route path={":productId"} element={<DetailPage/>} />
+                <Route path=":productId" element={<DetailPage/>} />
 
             </Routes>
         </Box>

@@ -6,6 +6,7 @@ import { Box, Container, Grid, makeStyles, Paper } from '@material-ui/core'
 import ProductList from '../components/ProductList'
 import ProductSkeletonList from '../components/ProductSkeletonList'
 import './styles.css'
+import { useSelector } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
   root: {},
 
@@ -28,6 +29,7 @@ function ListPage(props) {
   const classes = useStyles();
   const [productList,setProductList] = React.useState([])
   const [loading,setLoading] = React.useState(true)
+  const callback = useSelector(state => state.callback)
   React.useEffect(()=>{
     (async()=>{
       const query ={
@@ -38,7 +40,7 @@ function ListPage(props) {
       setProductList(res.products)
       setLoading(false);
     })()
-  },[])
+  },[callback])
   return (
     <Box>
       <Container>

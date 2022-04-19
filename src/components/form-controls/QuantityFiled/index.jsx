@@ -3,10 +3,10 @@ import FormControl from "@material-ui/core/FormControl";
 import IconButton from "@material-ui/core/IconButton";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import PropTypes from "prop-types";
 import React from "react";
-import { Controller, useFieldArray } from "react-hook-form";
-import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import { Controller } from "react-hook-form";
 const useStyles = makeStyles((theme) => ({
   root: {},
   box: {

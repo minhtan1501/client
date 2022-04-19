@@ -1,26 +1,18 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import userApi from '../../api/userApi';
+import { Box } from "@material-ui/core";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import HistoryDetail from "./page/HistoryDetail";
+import HistoryList from "./page/HistoryList";
 
 function HistoryOder() {
-    const user = useSelector(state => state.user);
-    React.useEffect(()=>{
-        (async()=>{
-            try{
-                
-                if(user?.token){
-                    console.log(user.token);
-                    const res = await userApi.getHistory({token:user?.token});
-                    console.log(res)
-                }
-            }catch(err){
-
-            }
-        })()
-    },[user])
   return (
-    <div>HistoryOder</div>
-  )
+    <Box pt={3}>
+      <Routes>
+        <Route path="/*" element={<HistoryList />} />
+        <Route path=":historyId" element={<HistoryDetail />} />
+      </Routes>
+    </Box>
+  );
 }
 
-export default HistoryOder
+export default HistoryOder;

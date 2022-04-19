@@ -58,7 +58,6 @@ function CartItem({ product }) {
     resolver: yupResolver(schema),
   });
   const handleSubmitAdd = (value) => {
-    console.log(product.product._id, value);
     dispatch(
       setQuantity({
         id: product.product._id,
@@ -109,7 +108,6 @@ function CartItem({ product }) {
             label="Quantity"
             onSubmit={handleSubmit}
             handleSubmit={handleSubmitAdd}
-            defaultvalue={5}
           />
           <IconButton
             size="small"
