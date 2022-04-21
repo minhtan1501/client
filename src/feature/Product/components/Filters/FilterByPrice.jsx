@@ -42,8 +42,8 @@ function FilterByPrice({ onChange}) {
 
   return (
     <Box className={classes.root}>
-      <Typography variant="subtitle2">
-        Giá
+      <Typography variant="h5">
+        Price
       </Typography>
       <Box className={classes.range}>
         <TextField type="number" name='salePrice_gte' value={values.salePrice_gte} onChange={handleChange}/>

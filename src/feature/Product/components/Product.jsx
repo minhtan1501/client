@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 // import { useHistory } from 'react-router-dom';
 import { formatPrice } from "../../../utils/common";
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
   }
 }));
-function Product({ product }) {
+function Product({ product,handleDeleteProduct,admin }) {
   const navigate = useNavigate();
   const classes = useStyles();
   // const history = useHistory();
@@ -57,6 +57,10 @@ function Product({ product }) {
   };
   const handleClickEdit = () =>{
     navigate(`/editproduct/${product._id}`);
+  }
+  const handleClickDelete = () =>{
+    if(!handleDeleteProduct) return;
+    handleDeleteProduct(product._id,product.images.public_id);
   }
   return (
     <Card sx={{ maxWidth: 345 }} className={classes.root}>
@@ -68,8 +72,10 @@ function Product({ product }) {
         className={classes.img}
         onClick={handleClick}
       />
-      <EditOutlinedIcon onClick={handleClickEdit} className={classes.edit} />
-      <DeleteOutlineOutlinedIcon className={classes.delete} />
+      {admin ? <>
+        <EditOutlinedIcon onClick={handleClickEdit} className={classes.edit} />
+        <DeleteOutlineOutlinedIcon className={classes.delete}  onClick={handleClickDelete}/>
+      </> : false}
       <CardContent>
         <Box
           sx={{

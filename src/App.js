@@ -40,7 +40,7 @@ function App() {
     refresh();
     setTimeout(()=>{
       refresh();
-    },10*24*1000)
+    },10*60*1000)
   }, [user.token]);
   React.useEffect(() => {
     (async () => {

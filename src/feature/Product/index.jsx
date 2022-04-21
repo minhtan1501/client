@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Routes } from 'react-router-dom';
 import ListPage from './pages/ListPage';
@@ -21,4 +21,4 @@ function ProductFeature(props) {
     );
 }
 
-export default ProductFeature;
+export default memo(ProductFeature);

@@ -40,7 +40,6 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     current: {},
-    settings: {},
     token: "",
   },
   reducers: {

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import categoryApi from 'api/categoryApi';
-import { Skeleton } from '@material-ui/lab';
-
+import categoryApi from '../../../../api/categoryApi'
+import { Skeleton } from '@mui/material';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -11,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   menu: {
     padding: 0,
     margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
     listStyleType: 'none',
     '& > li': {
       marginTop: theme.spacing(1),
@@ -32,7 +34,7 @@ function FilterByCategory({ onChange }) {
   React.useEffect(() => {
     (async () => {
       try {
-        const response = await categoryApi.getAll();
+        const response = await categoryApi.getAllCategory();
         setCategoryList(response);
         setLoading(false);
       } catch (err) {
@@ -48,13 +50,13 @@ function FilterByCategory({ onChange }) {
   };
   return (
     <Box className={classes.root}>
-      <Typography variant={'subtitle2'}>DANH MỤC SẢN PHẨM</Typography>
+      <Typography  variant='h6'>Category</Typography>
       {loadding ? (
-        Array.from(new Array(6)).map((x, index) => <Skeleton key={index} />)
+        Array.from(new Array(categoryList.length)).map((x, index) => <Skeleton key={index} />)
       ) : (
         <ul className={classes.menu}>
           {categoryList.map((category ,index) => (
-            <li  onClick={() => handleCategoryClick(category.id)} key={category.id}>
+            <li  onClick={() => handleCategoryClick(category.name)} key={category._id}>
               <Typography variant="body2">{category.name}</Typography>
             </li>
           ))}

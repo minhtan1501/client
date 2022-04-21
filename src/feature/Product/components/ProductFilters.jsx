@@ -1,22 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Box } from '@material-ui/core';
+import { Box, makeStyles, Paper } from '@material-ui/core';
 import FilterByCategory from './Filters/FilterByCategory';
 import FilterByPrice from './Filters/FilterByPrice';
-import FilterByService from './Filters/FilterByService';
+// import FilterByService from './Filters/FilterByService';
 
-ProductFilters.propTypes = {
-    filters: PropTypes.object.isRequired,
-    onChange: PropTypes.func,
-};
+
+const useStyles = makeStyles((theme) => ({
+    root:{
+        display: 'flex',
+        flexDirection: 'column',
+    }
+}))
 
 function ProductFilters({filters, onChange}) {
-    
-    const handleCategoryChange = (categoryId) =>{
+    const classes = useStyles();
+    const handleCategoryChange = (value) =>{
         if(!onChange) return
         const newFilters = {
             ...filters,
-            "category.id": categoryId
+            category: value
         };
 
         onChange(newFilters);
@@ -43,10 +45,10 @@ function ProductFilters({filters, onChange}) {
     }
 
     return (
-        <Box>
+        <Box component={Paper} className={classes.root}>
             <FilterByCategory onChange={handleCategoryChange}/>
             <FilterByPrice onChange={handlePriceChange} />
-            <FilterByService  filters={filters} onChange={handleServiceChange} />
+            {/* <FilterByService  filters={filters} onChange={handleServiceChange} /> */}
         </Box>
     );
 }

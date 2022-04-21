@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
